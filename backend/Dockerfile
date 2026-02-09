@@ -33,6 +33,10 @@ ENV PORT=3000
 ENV CHROME_BIN=google-chrome-stable
 
 EXPOSE 3000
+# Build step
+RUN npm run build
+
+EXPOSE 3000
 
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["sh", "-c", "dockerize -wait tcp://${DB_HOST}:3306 && node src/database/migrate-wrapper.js && npx ts-node --transpile-only src/server.ts"]
+CMD ["sh", "-c", "dockerize -wait tcp://${DB_HOST}:3306 && npx sequelize-cli db:migrate --migrations-path dist/database/migrations --config dist/config/database.js --env production && node dist/server.js"]
