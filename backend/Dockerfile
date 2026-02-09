@@ -35,6 +35,4 @@ ENV CHROME_BIN=google-chrome-stable
 EXPOSE 3000
 
 ENTRYPOINT ["dumb-init", "--"]
-CMD dockerize -wait tcp://${DB_HOST}:3306 \
-  && NODE_OPTIONS='--require ts-node/register' npx sequelize-cli db:migrate --env production \
-  && npx ts-node --transpile-only src/server.ts
+CMD ["sh", "-c", "dockerize -wait tcp://${DB_HOST}:3306 && export NODE_OPTIONS='--require ts-node/register' && npx sequelize-cli db:migrate --env production && npx ts-node --transpile-only src/server.ts"]
