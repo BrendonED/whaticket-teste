@@ -26,7 +26,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm run build
+
 
 ENV NODE_ENV=production
 ENV PORT=3000
@@ -37,4 +37,4 @@ EXPOSE 3000
 ENTRYPOINT ["dumb-init", "--"]
 CMD dockerize -wait tcp://${DB_HOST}:3306 \
   && npx sequelize db:migrate \
-  && node dist/server.js
+  && ts-node src/server.ts
