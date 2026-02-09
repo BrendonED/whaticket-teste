@@ -35,4 +35,4 @@ ENV CHROME_BIN=google-chrome-stable
 EXPOSE 3000
 
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["sh", "-c", "dockerize -wait tcp://${DB_HOST}:3306 && npx tsc src/database/migrations/*.ts --outDir dist/database/migrations --target es6 --module commonjs --allowSyntheticDefaultImports --esModuleInterop --skipLibCheck --types [] && npx sequelize-cli db:migrate --migrations-path dist/database/migrations --config src/config/database.js --env production && npx ts-node --transpile-only src/server.ts"]
+CMD ["sh", "-c", "dockerize -wait tcp://${DB_HOST}:3306 && node src/database/migrate-wrapper.js && npx ts-node --transpile-only src/server.ts"]
