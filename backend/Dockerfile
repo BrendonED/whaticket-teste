@@ -30,7 +30,7 @@ COPY . .
 
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV CHROME_BIN=google-chrome-stable
+ENV CHROME_BIN=/usr/bin/google-chrome-stable
 
 EXPOSE 3000
 # Build step
